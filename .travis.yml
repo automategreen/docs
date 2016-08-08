@@ -1,10 +1,9 @@
-sudo: false
-
 language: ruby
-
 rvm:
-  - 2.0.0
-  - 2.1.0
-
-cache: bundler
-script: bundle exec middleman build
+- 2.2.2
+install: bundle install
+script: bundle exec rake test
+after_success: bundle exec s3_website push
+env:
+  global:
+  - NOKOGIRI_USE_SYSTEM_LIBRARIES: true

@@ -15,7 +15,7 @@ search: true
 This document is the Automate Green API interface specification.
 
 <aside class="notice">
-Please help fix typos and errors by submitting a pull request on GitHub. 
+Please help fix typos and errors by submitting a pull request on <a href="https://github.com/automategreen/docs">GitHub</a>. 
 </aside>
 
 

@@ -15,7 +15,7 @@ toc_footers:
 This is the new Automate Green documentation site. 
 
 <aside class="notice">
-Please help fix typos and errors by submitting a pull request on GitHub. 
+Please help fix typos and errors by submitting a pull request on <a href="https://github.com/automategreen/docs">GitHub</a>. 
 </aside>
 
 <aside class="warning">

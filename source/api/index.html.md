@@ -2,6 +2,7 @@
 title: API Reference
 
 toc_footers:
+  - <a href='/sensors/'>Sensor Hub Documentation</a>
   - <a href='https://app.automategreen.com/'>Beta Login</a>
 
 includes:

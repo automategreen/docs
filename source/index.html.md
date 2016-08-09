@@ -5,6 +5,7 @@ no_right_col: true
 
 toc_footers:
   - <a href='/api/'>API Documentation</a>
+  - <a href='/sensors/'>Sensor Hub Documentation</a>
   - <a href='https://app.automategreen.com/'>Beta Login</a>
 
 ---

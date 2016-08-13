@@ -9,6 +9,11 @@ toc_footers:
 
 includes:
   - sensors/temperature
+  - sensors/current
+  - sensors/light
+  - sensors/contact
+  - sensors/temp-humidity
+  - sensors/leak
 
 search: true
 ---

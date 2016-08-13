@@ -38,7 +38,7 @@ It can take several minutes for the temperature to be updated. Once it updates, 
 
 ## Temperature Sensor Chart
 
-The temperature charts can be used to view the past temperature changes.  The graphs support four type of temperature:
+The temperature charts can be used to view the past temperature changes.  The graphs support five types:
 
   - Daily average
   - 6-hour average

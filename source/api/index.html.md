@@ -390,12 +390,21 @@ disabled | boolean | Is the action disabled
 
 #### Flow Event
 - **flow** - Triggered when flow changes.  *Optional supports thresholds*
+- **turnOn** - Triggered when flow is detected
+- **turnOff** - Triggered when flow stops
 
 #### Temperature Event
 - **temp** - Triggered when temperature changes.  *Optional supports thresholds*
 
 #### Current Event
 - **current** - Triggered when current changes.  *Optional supports thresholds*
+- **turnOn** - Triggered when current is detected
+- **turnOff** - Triggered when current stops
+
+#### Light/Photo Event
+- **resistance** - Triggered when resistance in photocell changes.  *Optional supports thresholds*
+- **dark** - Triggered when resistance goes above light threshold
+- **light** - Triggered when resistance goes below light threshold
 
 ### Thresholds
 

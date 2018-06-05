@@ -522,11 +522,8 @@ html, body {
 
 .content {
   pre, blockquote {
-    background-color: $code-bg;
     color: #fff;
 
-    padding: 2em $main-padding;
-    margin: 0;
     width: $examples-width;
 
     float:right;
@@ -545,20 +542,18 @@ html, body {
       border-bottom: dashed 1px #ccc;
     }
   }
+  pre {
+    background-color: $code-bg;
+    padding: 2em $main-padding;
+    margin: 0 0 1em 0;
+  }
+  blockquote {
+    padding: 2em $main-padding 0.5em;
+    margin: 0;
+  }
 
   pre {
     @extend %code-font;
-  }
-
-  blockquote {
-    &>p {
-      // background-color: $code-annotation-bg;
-      // border-radius: 5px;
-      // padding: $code-annotation-padding;
-      color: #ccc;
-      // border-top: 1px solid #000;
-      // border-bottom: 1px solid #404040;
-    }
   }
 }
 

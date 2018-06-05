@@ -102,6 +102,8 @@ You must replace <code>$TOKEN</code> with your API token.
 
 ## Add Power Controller Device
 
+> Example request:
+
 ```sh
 curl -X POST https://api.automategreen.com/v1/devices \
      -d "sn=PC-ZXCVBNMASDF-001" \
@@ -145,8 +147,10 @@ country | string | The country in which the Power Controller's SIM should be act
 
 ## List Power Controller Devices
 
+> Example request:
+
 ```shell
- curl https://api.automategreen.com/v1/devices \
+curl https://api.automategreen.com/v1/devices \
 -H "Authorization: Bearer $TOKEN"
 ```
 
@@ -193,6 +197,8 @@ List the Power Controllers for your account.  This request will include all devi
 `GET /v1/devices`
 
 ## Get a Device
+
+> Example request:
 
 ```shell
  curl https://api.automategreen.com/v1/devices \
@@ -243,6 +249,8 @@ Get the details for a single Power Controller.  The status is the last known sta
 
 ## Refresh the Device Status
 
+> Example request:
+
 ```sh
 curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/status \
      -H "Authorization: Bearer $TOKEN" \
@@ -262,6 +270,8 @@ This API request is not needed for normal operation.  The device will automatica
 
 ## Turn load on
 
+> Example request:
+
 ```sh
 curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
      -H "Authorization: Bearer $TOKEN" \
@@ -275,6 +285,8 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 
 ## Turn load off
 
+> Example request:
+
 ```sh
 curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
      -H "Authorization: Bearer $TOKEN" \
@@ -286,7 +298,9 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
         }'
 ```
 
-## Turn load on in 60 seconds (delayed on)
+## Turn load On In X
+
+> Example request:
 
 ```sh
 curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
@@ -300,7 +314,9 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
         }'
 ```
 
-## Turn load off in 60 seconds (delayed off)
+## Turn load Off In X
+
+> Example request:
 
 ```sh
 curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
@@ -314,7 +330,9 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
         }'
 ```
 
-## Turn load on for 60 seconds (toggles off after 60 seconds)
+## Turn load On For X
+
+> Example request:
 
 ```sh
 curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
@@ -330,6 +348,8 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 
 ## Turn load off for 60 seconds (toggles on after 60 seconds)
 
+> Example request:
+
 ```sh
 curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
      -H "Authorization: Bearer $TOKEN" \
@@ -343,6 +363,8 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 ```
 
 ## Limit power for 1 hour to 50 watt*hours
+
+> Example request:
 
 ```sh
 curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
@@ -367,7 +389,7 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 
 ### Enable FFR
 
-> Enable FFR
+> Example request:
 
 ```sh
 curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
@@ -401,7 +423,7 @@ delay | number | The maximum delay for the random return to service.
 
 ### Disable FFR
 
-> Disable FFR
+> Example request:
 
 ```sh
 curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
@@ -422,6 +444,8 @@ To disable the FFR on a Power Controller, the `ffr` object in the device's `info
 
 ### No Flowmeter
 
+> Example request:
+
 ```sh
 curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
      -H "Authorization: Bearer $TOKEN" \
@@ -436,6 +460,8 @@ curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
 ```
 
 ### TUF2000M Clamp-on Flowmeter
+
+> Example request:
 
 ```sh
 curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
@@ -455,6 +481,8 @@ curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
 
 ### EUF4315K Clamp-on Flowmeter
 
+> Example request:
+
 ```sh
 curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
      -H "Authorization: Bearer $TOKEN" \
@@ -471,6 +499,8 @@ curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
 ## Configure Load Capacity
 
 ### Enable Capacity
+
+> Example request:
 
 ```sh
 curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
@@ -492,6 +522,8 @@ curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
 
 ### Disable Capacity
 
+> Example request:
+
 ```sh
 curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
      -H "Authorization: Bearer $TOKEN" \
@@ -511,6 +543,8 @@ curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
 The status objects have had two parameters added to track the type of update and reason for the update. There are three types of status for the power controller: update, relay, trigger.
 
 ### Update Status Type
+
+> Example request:
 
 ```json
 {
@@ -538,6 +572,8 @@ The update status is sent periodicity (auto) or when a status request is issued 
 
 ### Relay Status Type
 
+> Example request:
+
 ```json
 {
   "id": "xyz890ABC",
@@ -557,6 +593,8 @@ The relay status records when the relay was turned on or off and what turned it 
 
 
 ## Trigger Status Type
+
+> Example request:
 
 ```json
 {

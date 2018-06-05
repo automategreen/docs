@@ -103,7 +103,7 @@ You must replace <code>$TOKEN</code> with your API token.
 ## Add Power Controller Device
 
 ```sh
-curl -s -X POST https://api.automategreen.com/v1/devices \
+curl -X POST https://api.automategreen.com/v1/devices \
      -d "sn=PC-ZXCVBNMASDF-001" \
      -d "country=US" \
      -H "Authorization: Bearer $TOKEN"
@@ -244,7 +244,7 @@ Get the details for a single Power Controller.  The status is the last known sta
 ## Refresh the Device Status
 
 ```sh
-curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/status \
+curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/status \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json"
 ```
@@ -263,7 +263,7 @@ This API request is not needed for normal operation.  The device will automatica
 ## Turn load on
 
 ```sh
-curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
+curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
      -d "{\"command\": {\"name\": \"on\"}}"
@@ -272,7 +272,7 @@ curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 ## Turn load off
 
 ```sh
-curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
+curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
      -d "{\"command\": {\"name\": \"off\"}}"
@@ -281,7 +281,7 @@ curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 ## Turn load on in 60 seconds (delayed on)
 
 ```sh
-curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
+curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
      -d "{\"command\": {\"name\": \"on\", \"delay\": 60}}"
@@ -290,7 +290,7 @@ curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 ## Turn load off in 60 seconds (delayed off)
 
 ```sh
-curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
+curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
      -d "{\"command\": {\"name\": \"off\", \"delay\": 60}}"
@@ -299,7 +299,7 @@ curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 ## Turn load on for 60 seconds (toggles off after 60 seconds)
 
 ```sh
-curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
+curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
      -d "{\"command\": {\"name\": \"on_for\", \"time\": 60}}"
@@ -308,7 +308,7 @@ curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 ## Turn load off for 60 seconds (toggles on after 60 seconds)
 
 ```sh
-curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
+curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
      -d "{\"command\": {\"name\": \"off_for\", \"time\": 60}}"
@@ -317,10 +317,17 @@ curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 ## Limit power for 1 hour to 50 watt*hours
 
 ```sh
-curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
+curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
-     -d "{\"command\": {\"name\": \"limit_power\", \"power\": 50, \"time\": 3600} }"
+     -d \
+     '{
+       "command": {
+         "name": "limit_power",
+         "power": 50,
+         "time": 3600
+        }
+      }'
 ```
 
 # Configuring
@@ -333,28 +340,54 @@ curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 
 ### Enable FFR
 
+> Enable FFR
+
 ```sh
-curl -s -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
+curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
      -d "{\"info\": {\"ffr\":{\"enable\":true,\"tripThreshold\":59.7,\"returnThreshold\":59.8,\"periods\":10,\"delay\":10} } }"
 ```
 
+To enable the FFR on a Power Controller, the `ffr` object in the device's `info` is send.
+
+
+### Info FRR Attributes
+
+Attribute | Type | Description
+--------- | ------- | -----------
+enable | boolean | Enables/Disables the FFR functionality
+tripThreshold | number | The frequency to trigger the FFR (turn)
+returnThreshold | number | The frequency to return to service (after random delay)
+periods | number | The number of periods (cycles) the threshold is passed before transitioning
+delay | number | The maximum delay for the random return to service.
+
 ### Disable FFR
 
+> Disable FFR
+
 ```sh
-curl -s -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
+curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
-     -d "{\"info\": {\"ffr\":{\"enable\":false} } }"
+     -d '
+{
+  "info": {
+    "ffr":{
+      "enable": false
+    }
+  }
+}'
 ```
+
+To disable the FFR on a Power Controller, the `ffr` object in the device's `info` is send with `enable=false`.
 
 ## Configure Flowmeter
 
 ### No Flowmeter
 
 ```sh
-curl -s -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
+curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
      -d "{\"info\": {\"flowmeter\":{\"type\":\"none\"} } }"
@@ -363,7 +396,7 @@ curl -s -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
 ### TUF2000M Clamp-on Flowmeter
 
 ```sh
-curl -s -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
+curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
      -d "{\"info\": {\"flowmeter\":{\"type\":\"tuf2000m\", \"pipeOuterDiameter\": 22.225, \"pipeWallThickness\": 0.8128, \"pipeType\": \"copper\"} } }"
@@ -372,7 +405,7 @@ curl -s -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
 ### EUF4315K Clamp-on Flowmeter
 
 ```sh
-curl -s -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
+curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
      -d "{\"info\": {\"flowmeter\":{\"type\":\"euf4315k\"} }"
@@ -383,7 +416,7 @@ curl -s -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
 ### Enable Capacity
 
 ```sh
-curl -s -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
+curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
      -d "{\"info\": {\"capacity\":{\"enable\":true, \"maxCapacity\":100, \"minCapacity\":50, \"lossPerLiter\":5.5, \"lossPerIdleMinute\":1.3, \"gainPerWattHour\":2.7} } }"
@@ -392,7 +425,7 @@ curl -s -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
 ### Disable Capacity
 
 ```sh
-curl -s -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
+curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
      -d "{\"info\": {\"capacity\":{\"enable\":false} } }"

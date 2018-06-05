@@ -36,12 +36,12 @@ curl https://api.automategreen.com/v1/signin \
 
 ```json
 {
-    "message": "Sign in successful",
-    "token": "vgdBwL149wfE8upzCY4PiaQOQZsrcIAV4fC1.Zl3vKu5bKhkdBJoCBbJ4ujqMtpvgdBwL149wfE8upzCY4PiaQOQZsrcIAV4fC1xZl3vKu5b.hkdBJoCBbJ4ujqMtpvgdBwL149wfE8upzCY4PiaQOQZ",
-    "user": {
-        "email": "user@example.com",
-        "name": "Example User"
-    }
+  "message": "Sign in successful",
+  "token": "vgdBwL149wfE8upzCY4PiaQOQZsrcIAV4fC1.Zl3vKu5bKhkdBJoCBbJ4ujqMtpvgdBwL149wfE8upzCY4PiaQOQZsrcIAV4fC1xZl3vKu5b.hkdBJoCBbJ4ujqMtpvgdBwL149wfE8upzCY4PiaQOQZ",
+  "user": {
+    "email": "user@example.com",
+    "name": "Example User"
+  }
 }
 ```
 
@@ -266,7 +266,11 @@ This API request is not needed for normal operation.  The device will automatica
 curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
-     -d "{\"command\": {\"name\": \"on\"}}"
+     -d '{
+          "command": {
+            "name": "on"
+          }
+        }'
 ```
 
 ## Turn load off
@@ -275,7 +279,11 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
-     -d "{\"command\": {\"name\": \"off\"}}"
+     -d '{
+          "command": {
+            "name": "off"
+          }
+        }'
 ```
 
 ## Turn load on in 60 seconds (delayed on)
@@ -284,7 +292,12 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
-     -d "{\"command\": {\"name\": \"on\", \"delay\": 60}}"
+     -d '{
+          "command": {
+            "name": "on",
+            "delay": 60
+          }
+        }'
 ```
 
 ## Turn load off in 60 seconds (delayed off)
@@ -293,7 +306,12 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
-     -d "{\"command\": {\"name\": \"off\", \"delay\": 60}}"
+     -d '{
+          "command": {
+            "name": "off",
+            "delay": 60
+          }
+        }'
 ```
 
 ## Turn load on for 60 seconds (toggles off after 60 seconds)
@@ -302,7 +320,12 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
-     -d "{\"command\": {\"name\": \"on_for\", \"time\": 60}}"
+     -d '{
+          "command": {
+            "name": "on_for",
+            "time": 60
+          }
+        }'
 ```
 
 ## Turn load off for 60 seconds (toggles on after 60 seconds)
@@ -311,7 +334,12 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
-     -d "{\"command\": {\"name\": \"off_for\", \"time\": 60}}"
+     -d '{
+          "command": {
+            "name": "off_for",
+            "time": 60
+          }
+        }'
 ```
 
 ## Limit power for 1 hour to 50 watt*hours
@@ -320,14 +348,13 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
-     -d \
-     '{
-       "command": {
-         "name": "limit_power",
-         "power": 50,
-         "time": 3600
-        }
-      }'
+     -d '{
+          "command": {
+            "name": "limit_power",
+            "power": 50,
+            "time": 3600
+          }
+        }'
 ```
 
 # Configuring
@@ -346,7 +373,17 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
-     -d "{\"info\": {\"ffr\":{\"enable\":true,\"tripThreshold\":59.7,\"returnThreshold\":59.8,\"periods\":10,\"delay\":10} } }"
+     -d '{
+          "info": {
+            "ffr": {
+              "enable": true,
+              "tripThreshold": 59.7,
+              "returnThreshold": 59.8,
+              "periods": 10,
+              "delay": 10
+            }
+          }
+        }'
 ```
 
 To enable the FFR on a Power Controller, the `ffr` object in the device's `info` is send.
@@ -370,14 +407,13 @@ delay | number | The maximum delay for the random return to service.
 curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
-     -d '
-{
-  "info": {
-    "ffr":{
-      "enable": false
-    }
-  }
-}'
+     -d '{
+          "info": {
+            "ffr":{
+              "enable": false
+            }
+          }
+        }'
 ```
 
 To disable the FFR on a Power Controller, the `ffr` object in the device's `info` is send with `enable=false`.
@@ -390,7 +426,13 @@ To disable the FFR on a Power Controller, the `ffr` object in the device's `info
 curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
-     -d "{\"info\": {\"flowmeter\":{\"type\":\"none\"} } }"
+     -d '{
+          "info": {
+            "flowmeter": {
+              "type": "none"
+            }
+          }
+        }'
 ```
 
 ### TUF2000M Clamp-on Flowmeter
@@ -399,7 +441,16 @@ curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
 curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
-     -d "{\"info\": {\"flowmeter\":{\"type\":\"tuf2000m\", \"pipeOuterDiameter\": 22.225, \"pipeWallThickness\": 0.8128, \"pipeType\": \"copper\"} } }"
+     -d '{
+          "info": {
+            "flowmeter":{
+              "type": "tuf2000m",
+              "pipeOuterDiameter": 22.225,
+              "pipeWallThickness": 0.8128,
+              "pipeType": "copper"
+            }
+          }
+        }'
 ```
 
 ### EUF4315K Clamp-on Flowmeter
@@ -408,7 +459,13 @@ curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
 curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
-     -d "{\"info\": {\"flowmeter\":{\"type\":\"euf4315k\"} }"
+     -d '{
+          "info": {
+            "flowmeter": {
+              "type": "euf4315k"
+            }
+          }
+        }'
 ```
 
 ## Configure Load Capacity
@@ -419,7 +476,18 @@ curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
 curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
-     -d "{\"info\": {\"capacity\":{\"enable\":true, \"maxCapacity\":100, \"minCapacity\":50, \"lossPerLiter\":5.5, \"lossPerIdleMinute\":1.3, \"gainPerWattHour\":2.7} } }"
+     -d '{
+          "info": {
+            "capacity": {
+              "enable": true
+              "maxCapacity": 100
+              "minCapacity": 50
+              "lossPerLiter": 5.5
+              "lossPerIdleMinute": 1.3
+              "gainPerWattHour": 2.7
+            }
+          }
+        }'
 ```
 
 ### Disable Capacity
@@ -428,7 +496,13 @@ curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
 curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json" \
-     -d "{\"info\": {\"capacity\":{\"enable\":false} } }"
+     -d '{
+          "info": {
+            "capacity": {
+              "enable": false
+            }
+          }
+        }'
 ```
 
 

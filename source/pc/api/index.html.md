@@ -236,12 +236,92 @@ Get the details for a single Power Controller.  The status is the last known sta
 ### HTTP Request
 `GET /v1/devices/$DEVICE_ID`
 
+## Refresh Status
+
+### HTTP Request
+`POST /v1/devices/$DEVICE_ID/status`
+
+## Refresh the Device Status
+
+```sh
+curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/status \
+     -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json"
+```
+
+Manually request the Power Controller to send an updated status to the cloud.  The status will be based on the averages since the last status.
+
+<aside class="notice">
+This API request is not needed for normal operation.  The device will automatically send status updates every 15 minutes.
+</aside>
+
 # Sending Commands
 
 ### HTTP Request
 `POST /v1/devices/$DEVICE_ID/command`
 
+## Turn load on
 
+```sh
+curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
+     -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json" \
+     -d "{\"command\": {\"name\": \"on\"}}"
+```
+
+## Turn load off
+
+```sh
+curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
+     -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json" \
+     -d "{\"command\": {\"name\": \"off\"}}"
+```
+
+## Turn load on in 60 seconds (delayed on)
+
+```sh
+curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
+     -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json" \
+     -d "{\"command\": {\"name\": \"on\", \"delay\": 60}}"
+```
+
+## Turn load off in 60 seconds (delayed off)
+
+```sh
+curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
+     -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json" \
+     -d "{\"command\": {\"name\": \"off\", \"delay\": 60}}"
+```
+
+## Turn load on for 60 seconds (toggles off after 60 seconds)
+
+```sh
+curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
+     -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json" \
+     -d "{\"command\": {\"name\": \"on_for\", \"time\": 60}}"
+```
+
+## Turn load off for 60 seconds (toggles on after 60 seconds)
+
+```sh
+curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
+     -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json" \
+     -d "{\"command\": {\"name\": \"off_for\", \"time\": 60}}"
+```
+
+## Limit power for 1 hour to 50 watt*hours
+
+```sh
+curl -s -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
+     -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json" \
+     -d "{\"command\": {\"name\": \"limit_power\", \"power\": 50, \"time\": 3600} }"
+```
 
 # Configuring
 
@@ -249,7 +329,144 @@ Get the details for a single Power Controller.  The status is the last known sta
 `PUT /v1/devices/$DEVICE_ID`
 
 
+## Configure FFR
+
+### Enable FFR
+
+```sh
+curl -s -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
+     -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json" \
+     -d "{\"info\": {\"ffr\":{\"enable\":true,\"tripThreshold\":59.7,\"returnThreshold\":59.8,\"periods\":10,\"delay\":10} } }"
+```
+
+### Disable FFR
+
+```sh
+curl -s -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
+     -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json" \
+     -d "{\"info\": {\"ffr\":{\"enable\":false} } }"
+```
+
+## Configure Flowmeter
+
+### No Flowmeter
+
+```sh
+curl -s -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
+     -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json" \
+     -d "{\"info\": {\"flowmeter\":{\"type\":\"none\"} } }"
+```
+
+### TUF2000M Clamp-on Flowmeter
+
+```sh
+curl -s -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
+     -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json" \
+     -d "{\"info\": {\"flowmeter\":{\"type\":\"tuf2000m\", \"pipeOuterDiameter\": 22.225, \"pipeWallThickness\": 0.8128, \"pipeType\": \"copper\"} } }"
+```
+
+### EUF4315K Clamp-on Flowmeter
+
+```sh
+curl -s -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
+     -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json" \
+     -d "{\"info\": {\"flowmeter\":{\"type\":\"euf4315k\"} }"
+```
+
+## Configure Load Capacity
+
+### Enable Capacity
+
+```sh
+curl -s -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
+     -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json" \
+     -d "{\"info\": {\"capacity\":{\"enable\":true, \"maxCapacity\":100, \"minCapacity\":50, \"lossPerLiter\":5.5, \"lossPerIdleMinute\":1.3, \"gainPerWattHour\":2.7} } }"
+```
+
+### Disable Capacity
+
+```sh
+curl -s -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
+     -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json" \
+     -d "{\"info\": {\"capacity\":{\"enable\":false} } }"
+```
+
+
 # Statuses
+
+The status objects have had two parameters added to track the type of update and reason for the update. There are three types of status for the power controller: update, relay, trigger.
+
+### Update Status Type
+
+```json
+{
+  "id": "xyz890ABC",
+  "deviceId": "abc123def",
+  "date": "2018-05-03T12:22:58.807Z",
+  "state": "Active",
+  "type": "update",
+  "reason": "auto", // either 'auto' or 'api'
+  "info": {
+    "duration": 900, // Duration of the sensor sampling used for averaging (sec)
+    "current": 10.5, // Average current (A)
+    "voltage": 243.6, // Average voltage (V)
+    "power": 639.45, // Total power used during duration (Wh)
+    "temperature": 75.2, // Average abetment temperature (F)
+    "frequency": 60.01, // Average frequency (Hz)
+    "flow": 10.0, // Average rate of flow (L/min)
+    "on": true, // is the load state
+    "toggleIn": 0 // number of seconds until toggling relay state (0 means never)
+  }
+}
+```
+
+The update status is sent periodicity (auto) or when a status request is issued via the API (api). The update status will provides the sensor data and current relay state. In addition the time (duration) used to calculate the averages is also provided. For the automatic update statuses, the duration will be 900 seconds (15 minutes). For API status updates, the duration will vary based on the time sense the last update status.
+
+### Relay Status Type
+
+```json
+{
+  "id": "xyz890ABC",
+  "deviceId": "abc123def",
+  "date": "2018-05-03T12:22:58.807Z",
+  "state": "Active",
+  "type": "relay",
+  "reason": "reboot", // either 'reboot', 'timer', 'ffr', 'api', or 'manual'
+  "info": {
+    "on": true, // is the load state
+    "toggleIn": 0 // number of seconds until toggling relay state (0 means never)
+  }
+}
+```
+
+The relay status records when the relay was turned on or off and what turned it on or off.
+
+
+## Trigger Status Type
+
+```json
+{
+  "id": "xyz890ABC",
+  "deviceId": "abc123def",
+  "date": "2018-05-03T12:22:58.807Z",
+  "state": "Active",
+  "type": "trigger",
+  "reason": "ffr", // 'ffr'
+  "info": {
+    "frequency": 59.68, // Frequency at time of trigger (Hz)
+  }
+}
+```
+
+The trigger status records when a trigger was invoked and why it what trigger was invoked.
+
 
 ## List Statuses
 

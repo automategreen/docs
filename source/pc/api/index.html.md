@@ -283,6 +283,8 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
         }'
 ```
 
+Turns the load on now.
+
 ## Turn load off
 
 > Example request:
@@ -297,6 +299,8 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
           }
         }'
 ```
+
+Turn the load off now.
 
 ## Turn load On In X
 
@@ -314,6 +318,8 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
         }'
 ```
 
+Turn the load on in the future based on the delay (seconds).
+
 ## Turn load Off In X
 
 > Example request:
@@ -330,6 +336,8 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
         }'
 ```
 
+Turn the load off in the future based on the delay (seconds).
+
 ## Turn load On For X
 
 > Example request:
@@ -341,12 +349,14 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
      -d '{
           "command": {
             "name": "on_for",
-            "time": 60
+            "delay": 60
           }
         }'
 ```
 
-## Turn load off for 60 seconds (toggles on after 60 seconds)
+Turn the load on for a period of time based on the delay (seconds).
+
+## Turn load Off For X
 
 > Example request:
 
@@ -357,12 +367,50 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
      -d '{
           "command": {
             "name": "off_for",
-            "time": 60
+            "delay": 60
           }
         }'
 ```
 
-## Limit power for 1 hour to 50 watt*hours
+Turn the load off for a period of time based on the delay (seconds).
+
+## Turn load On At X
+
+> Example request:
+
+```sh
+curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
+     -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json" \
+     -d '{
+          "command": {
+            "name": "on_at",
+            "time": 1528225394
+          }
+        }'
+```
+
+Turn the load on at a set time.  Time is the number of seconds elapsed since the UNIX epoch.
+
+## Turn load Off At
+
+> Example request:
+
+```sh
+curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
+     -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json" \
+     -d '{
+          "command": {
+            "name": "off_at",
+            "time": 1528225394
+          }
+        }'
+```
+
+Turn the load off at a set time.  Time is the number of seconds elapsed since the UNIX epoch.
+
+## Limit Power
 
 > Example request:
 
@@ -379,6 +427,8 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
         }'
 ```
 
+Limit the amount of power the Power Controller can use for a set period of time.  Power is in Watt*hours.  Time is in seconds.
+
 # Configuring
 
 ### HTTP Request
@@ -386,6 +436,17 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 
 
 ## Configure FFR
+
+
+### Info FRR Attributes
+
+Attribute | Type | Description
+--------- | ------- | -----------
+enable | boolean | Enables/Disables the FFR functionality
+tripThreshold | number | The frequency to trigger the FFR (turn)
+returnThreshold | number | The frequency to return to service (after random delay)
+periods | number | The number of periods (cycles) the threshold is passed before transitioning
+delay | number | The maximum delay for the random return to service.
 
 ### Enable FFR
 
@@ -409,17 +470,6 @@ curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
 ```
 
 To enable the FFR on a Power Controller, the `ffr` object in the device's `info` is send.
-
-
-### Info FRR Attributes
-
-Attribute | Type | Description
---------- | ------- | -----------
-enable | boolean | Enables/Disables the FFR functionality
-tripThreshold | number | The frequency to trigger the FFR (turn)
-returnThreshold | number | The frequency to return to service (after random delay)
-periods | number | The number of periods (cycles) the threshold is passed before transitioning
-delay | number | The maximum delay for the random return to service.
 
 ### Disable FFR
 
@@ -459,6 +509,8 @@ curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
         }'
 ```
 
+When no flowmeter is connected the flowmeter type should be set to `none`.
+
 ### TUF2000M Clamp-on Flowmeter
 
 > Example request:
@@ -479,6 +531,8 @@ curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
         }'
 ```
 
+To configure the TUF2000M set the type to `tuf2000m` and configure the pipe attributes.
+
 ### EUF4315K Clamp-on Flowmeter
 
 > Example request:
@@ -495,6 +549,8 @@ curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
           }
         }'
 ```
+
+To configure the clamp-on EUF4315K flowmeter, set the type to `euf4315k`.
 
 ## Configure Load Capacity
 
@@ -520,6 +576,9 @@ curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
         }'
 ```
 
+To enable the capacity set points on a Power Controller, the `capacity` object in the device's `info` is send with the capacity configurations.
+
+
 ### Disable Capacity
 
 > Example request:
@@ -536,6 +595,8 @@ curl -X PUT https://api.automategreen.com/v1/devices/$DEVICE_ID \
           }
         }'
 ```
+
+To disable the capacity set points on a Power Controller, the `capacity` object in the device's `info` is send with `enable=false`.
 
 
 # Statuses

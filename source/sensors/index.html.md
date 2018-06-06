@@ -14,6 +14,7 @@ includes:
   - sensors/contact
   - sensors/temp-humidity
   - sensors/leak
+  - sensors/flow-ultrasonic
 
 search: true
 ---
@@ -23,8 +24,5 @@ search: true
 This document guides you through how to configure various senors for the Senor Hub.
 
 <aside class="notice">
-Please help fix typos and errors by submitting a pull request on <a href="https://github.com/automategreen/docs">GitHub</a>. 
+Please help fix typos and errors by submitting a pull request on <a href="https://github.com/automategreen/docs">GitHub</a>.
 </aside>
-
-
-

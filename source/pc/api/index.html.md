@@ -615,7 +615,7 @@ The status objects have had two parameters added to track the type of update and
   "date": "2018-05-03T12:22:58.807Z",
   "state": "Active",
   "type": "update",
-  "reason": "auto", // either 'auto' or 'api'
+  "reason": "auto",
   "info": {
     "duration": 900,
     "current": 10.5,
@@ -668,10 +668,10 @@ toggleAt    | number  | UNIX epoch timestamp (seconds) for when to toggle the re
   "date": "2018-05-03T12:22:58.807Z",
   "state": "Active",
   "type": "relay",
-  "reason": "reboot", // either 'reboot', 'timer', 'ffr', 'api', or 'manual'
+  "reason": "reboot",
   "info": {
-    "on": true, // is the load state
-    "toggleAt": 0 // number of seconds until toggling relay state (0 means never)
+    "on": true,
+    "toggleAt": 0
   }
 }
 ```
@@ -709,7 +709,7 @@ toggleAt    | number  | UNIX epoch timestamp (seconds) for when to toggle the re
   "type": "trigger",
   "reason": "ffr",
   "info": {
-    "frequency": 59.68,
+    "frequency": 59.695
   }
 }
 ```

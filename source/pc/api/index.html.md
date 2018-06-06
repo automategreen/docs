@@ -180,7 +180,7 @@ curl https://api.automategreen.com/v1/devices \
             "frequency": 60.01,
             "flow": null,
             "on": true,
-            "toggleIn": 0
+            "toggleAt": 0
           },
           "date": "2018-05-08T15:03:15.000Z"
         }
@@ -229,7 +229,7 @@ List the Power Controllers for your account.  This request will include all devi
         "frequency": 60.01,
         "flow": null,
         "on": true,
-        "toggleIn": 0
+        "toggleAt": 0
       },
       "date": "2018-05-08T15:03:15.000Z"
     }
@@ -301,7 +301,7 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 
 Turn the load off now.
 
-## Turn load On In X
+## Turn load On In
 
 > Example request:
 
@@ -319,7 +319,7 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 
 Turn the load on in the future based on the delay (seconds).
 
-## Turn load Off In X
+## Turn load Off In
 
 > Example request:
 
@@ -337,7 +337,7 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 
 Turn the load off in the future based on the delay (seconds).
 
-## Turn load On For X
+## Turn load On For
 
 > Example request:
 
@@ -355,7 +355,7 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 
 Turn the load on for a period of time based on the delay (seconds).
 
-## Turn load Off For X
+## Turn load Off For
 
 > Example request:
 
@@ -373,7 +373,7 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 
 Turn the load off for a period of time based on the delay (seconds).
 
-## Turn load On At X
+## Turn load On At
 
 > Example request:
 
@@ -600,6 +600,8 @@ To disable the capacity set points on a Power Controller, the `capacity` object 
 
 # Statuses
 
+## Status Types
+
 The status objects have had two parameters added to track the type of update and reason for the update. There are three types of status for the power controller: update, relay, trigger.
 
 ### Update Status Type
@@ -615,20 +617,45 @@ The status objects have had two parameters added to track the type of update and
   "type": "update",
   "reason": "auto", // either 'auto' or 'api'
   "info": {
-    "duration": 900, // Duration of the sensor sampling used for averaging (sec)
-    "current": 10.5, // Average current (A)
-    "voltage": 243.6, // Average voltage (V)
-    "power": 639.45, // Total power used during duration (Wh)
-    "temperature": 75.2, // Average abetment temperature (F)
-    "frequency": 60.01, // Average frequency (Hz)
-    "flow": 10.0, // Average rate of flow (L/min)
-    "on": true, // is the load state
-    "toggleIn": 0 // number of seconds until toggling relay state (0 means never)
+    "duration": 900,
+    "current": 10.5,
+    "voltage": 243.6,
+    "power": 639.45,
+    "temperature": 75.2,
+    "frequency": 60.01,
+    "flow": 10.0,
+    "on": true,
+    "toggleAt": 0
   }
 }
 ```
 
 The update status is sent periodicity (auto) or when a status request is issued via the API (api). The update status will provides the sensor data and current relay state. In addition the time (duration) used to calculate the averages is also provided. For the automatic update statuses, the duration will be 900 seconds (15 minutes). For API status updates, the duration will vary based on the time sense the last update status.
+
+#### Reason Values
+
+Reason | Description
+------ | -----------
+auto   | The status was sent automatically by the controller
+api    | The status was sent because the `status` API was called
+
+
+#### Info FRR Attributes
+
+Attribute   | Type    | Description
+----------- | ------- | -----------
+duration    | number  | Duration of the sensor sampling used for averaging (sec)
+current     | number  | Average current (A)
+voltage     | number  | Average voltage (V)
+power       | number  | Total power used during duration (Wh)
+temperature | number  | Average abetment temperature (F)
+frequency   | number  | Average frequency (Hz)
+flow        | number  | Average rate of flow (L/min)
+on          | boolean | The state of the load: `true` mean the load is powered
+toggleAt    | number  | UNIX epoch timestamp (seconds) for when to toggle the relay state (0 means never)
+
+
+
 
 ### Relay Status Type
 
@@ -644,15 +671,32 @@ The update status is sent periodicity (auto) or when a status request is issued 
   "reason": "reboot", // either 'reboot', 'timer', 'ffr', 'api', or 'manual'
   "info": {
     "on": true, // is the load state
-    "toggleIn": 0 // number of seconds until toggling relay state (0 means never)
+    "toggleAt": 0 // number of seconds until toggling relay state (0 means never)
   }
 }
 ```
 
 The relay status records when the relay was turned on or off and what turned it on or off.
 
+#### Reason Values
 
-## Trigger Status Type
+Reason   | Description
+-------- | -----------
+reboot   | Sent when the device boot up
+timer    | A timer (like a delay) cause the relay event
+ffr      | The FFR logic caused the relay event
+api      | The API was used to control the relay
+manual   | The mode button was pressed
+
+
+#### Info FRR Attributes
+
+Attribute   | Type    | Description
+----------- | ------- | -----------
+on          | boolean | The state of the load: `true` mean the load is powered
+toggleAt    | number  | UNIX epoch timestamp (seconds) for when to toggle the relay state (0 means never)
+
+### Trigger Status Type
 
 > Example request:
 
@@ -663,15 +707,27 @@ The relay status records when the relay was turned on or off and what turned it 
   "date": "2018-05-03T12:22:58.807Z",
   "state": "Active",
   "type": "trigger",
-  "reason": "ffr", // 'ffr'
+  "reason": "ffr",
   "info": {
-    "frequency": 59.68, // Frequency at time of trigger (Hz)
+    "frequency": 59.68,
   }
 }
 ```
 
 The trigger status records when a trigger was invoked and why it what trigger was invoked.
 
+#### Reason Values
+
+Reason | Description
+------ | -----------
+ffr    | FFR was the trigger event
+
+
+#### Info FRR Attributes
+
+Attribute   | Type    | Description
+----------- | ------- | -----------
+frequency   | number  | Frequency that triggered the FFR (Hz)
 
 ## List Statuses
 

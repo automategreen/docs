@@ -102,6 +102,12 @@ You must replace <code>$TOKEN</code> with your API token.
 
 ## Add Power Controller Device
 
+To add a Power Controller the serial number and country must be provided in the API body.
+
+### HTTP Request
+`POST /v1/devices`
+
+
 > Example request:
 
 ```sh
@@ -131,12 +137,6 @@ curl -X POST https://api.automategreen.com/v1/devices \
   }
 }
 ```
-
-To add a Power Controller the serial number and country must be provided in the API body.
-
-### HTTP Request
-`POST /v1/devices`
-
 
 ### Body Parameters
 

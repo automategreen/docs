@@ -548,6 +548,8 @@ html, body {
     margin: 0 0 1em 0;
   }
   blockquote {
+
+    background-color: $code-annotation-bg;
     padding: 0 $main-padding 0.5em;
     margin: 0;
   }

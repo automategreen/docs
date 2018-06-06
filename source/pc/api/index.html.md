@@ -102,12 +102,6 @@ You must replace <code>$TOKEN</code> with your API token.
 
 ## Add Power Controller Device
 
-To add a Power Controller the serial number and country must be provided in the API body.
-
-### HTTP Request
-`POST /v1/devices`
-
-
 > Example request:
 
 ```sh
@@ -138,7 +132,12 @@ curl -X POST https://api.automategreen.com/v1/devices \
 }
 ```
 
-### Body Parameters
+To add a Power Controller the serial number and country must be provided in the API body.
+
+#### HTTP Request
+`POST /v1/devices`
+
+#### Body Parameters
 
 Parameter | Type | Description
 --------- | ------- | -----------
@@ -193,7 +192,7 @@ curl https://api.automategreen.com/v1/devices \
 
 List the Power Controllers for your account.  This request will include all devices for your account not just the Power Controllers.
 
-### HTTP Request
+#### HTTP Request
 `GET /v1/devices`
 
 ## Get a Device
@@ -239,12 +238,12 @@ List the Power Controllers for your account.  This request will include all devi
 ```
 Get the details for a single Power Controller.  The status is the last known status for the Power Controller.
 
-### HTTP Request
+#### HTTP Request
 `GET /v1/devices/$DEVICE_ID`
 
 ## Refresh Status
 
-### HTTP Request
+#### HTTP Request
 `POST /v1/devices/$DEVICE_ID/status`
 
 ## Refresh the Device Status
@@ -265,7 +264,7 @@ This API request is not needed for normal operation.  The device will automatica
 
 # Sending Commands
 
-### HTTP Request
+#### HTTP Request
 `POST /v1/devices/$DEVICE_ID/command`
 
 ## Turn load on
@@ -431,14 +430,14 @@ Limit the amount of power the Power Controller can use for a set period of time.
 
 # Configuring
 
-### HTTP Request
+#### HTTP Request
 `PUT /v1/devices/$DEVICE_ID`
 
 
 ## Configure FFR
 
 
-### Info FRR Attributes
+#### Info FRR Attributes
 
 Attribute | Type | Description
 --------- | ------- | -----------
@@ -692,11 +691,11 @@ Returns a list of device statuses for the provided date range.
 The date range for a single request is limited to 10 days.
 </aside>
 
-### HTTP Request
+#### HTTP Request
 `GET /v1/statuses`
 
 
-### Query Parameters
+#### Query Parameters
 
 Parameter | Default | Description
 --------- | ------- | -----------

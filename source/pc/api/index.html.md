@@ -680,13 +680,17 @@ The relay status records when the relay was turned on or off and what turned it 
 
 #### Reason Values
 
-Reason   | Description
--------- | -----------
-reboot   | Sent when the device boot up
-timer    | A timer (like a delay) cause the relay event
-ffr      | The FFR logic caused the relay event
-api      | The API was used to control the relay
-manual   | The mode button was pressed
+Reason        | Description
+------------- | --------------------------------------------
+reboot        | Sent when the device boot up
+timer         | A timer (like a delay) cause the relay event
+ffr           | The FFR logic caused the relay event
+ffrr          | The FFR return logic caused the relay event
+api           | The API was used to control the relay
+manual        | The mode button was pressed
+power_limit   | The power limiting command's threshold
+max_capacity  | The load capacity reached the max value
+min_capacity  | The load capacity dropped to the min value
 
 
 #### Info FRR Attributes

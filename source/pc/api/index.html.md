@@ -772,7 +772,7 @@ Dates must be in ISO 8601 formated strings.
 
 # Response Codes
 
-If the controller is online and receiving commands, the following codes will be contained in the API response body with an HTTP status code of 200.  The the controller is not responding, the HTTP status code will be a 503.
+If the controller is online and receiving commands, the following codes will be contained in the API response body. The HTTP status code will be 200.  If the controller is not responding, the HTTP status code will be 503.
 
 Success Codes | Meaning
 ------------- | -------

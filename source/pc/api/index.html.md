@@ -768,3 +768,46 @@ date | Yesterday | Simplified date returning all status from this date to now
 <aside class="notice">
 Dates must be in ISO 8601 formated strings.
 </aside>
+
+
+# Response Codes
+
+If the controller is online and receiving commands, the following codes will be contained in the API response body with an HTTP status code of 200.  The the controller is not responding, the HTTP status code will be a 503.
+
+Success Codes | Meaning
+------------- | -------
+100	|	Refreshed the sensors status
+101	|	Refreshed the relays status
+102	|	Turned on the relay
+103	|	Turned off the relay
+104	|	Turned on the relay for period
+105	|	Turned off the relay for period
+106	|	Turn on the relay at timestamp
+107	|	Turn off the relay at timestamp
+108	|	FFR has been enabled and configured
+109	|	FFR has been disabled
+110	|	Flowmeter configured to none
+111	|	Flowmeter configured for EUF4315K
+112	|	Flowmeter configured for TUF2000M
+113	|	Capacity set point has been disabled
+114	|	Capacity set point has been enabled and configured
+115	|	Limit power has been configured
+
+
+Error Codes | Meaning
+----------- | -------
+-999	|	Trying to configure an unsupported sensor type
+-998	|	Capacity set point trip threshold is to low
+-997	|	Capacity set point return threshold is less than trip threshold
+-996	|	FFR period is to short
+-995	|	FFR period is to long
+-994	|	FFR delay is negative
+-993	|	Relay config is not supported
+-992	|	Invalid relay command
+-991	|	Pipe type is invalid
+-990	|	Pipe outer diameter is invalid
+-989	|	Pipe wall is invalid
+-988	|	Capacity set point minimum value is invalid
+-987	|	Capacity set point maximum value is invalid
+-986	|	Limit power value is invalid
+-985	|	Invalid future time

@@ -267,6 +267,23 @@ This API request is not needed for normal operation.  The device will automatica
 #### HTTP Request
 `POST /v1/devices/$DEVICE_ID/command`
 
+## Reset device
+
+Reset/reboots the controller.
+
+> Example Request:
+
+```sh
+curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
+     -H "Authorization: Bearer $TOKEN" \
+     -H "Content-Type: application/json" \
+     -d '{
+          "command": {
+            "name": "reset"
+          }
+        }'
+```
+
 ## Turn load on
 
 > Example Request:
@@ -776,6 +793,7 @@ If the controller is online and receiving commands, the following codes will be 
 
 Success Codes | Meaning
 ------------- | -------
+10	|	Triggered the controller to reset
 100	|	Refreshed the sensors status
 101	|	Refreshed the relays status
 102	|	Turned on the relay

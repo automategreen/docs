@@ -634,6 +634,7 @@ The status objects have had two parameters added to track the type of update and
   "type": "update",
   "reason": "auto",
   "info": {
+    "firmware": 10,
     "duration": 900,
     "current": 10.5,
     "voltage": 243.6,
@@ -661,6 +662,7 @@ api    | The status was sent because the `status` API was called
 
 Attribute   | Type    | Description
 ----------- | ------- | -----------
+firmware    | number  | The firmware build number of the controller
 duration    | number  | Duration of the sensor sampling used for averaging (sec)
 current     | number  | Average current (A)
 voltage     | number  | Average voltage (V)
@@ -687,6 +689,7 @@ toggleAt    | number  | UNIX epoch timestamp (seconds) for when to toggle the re
   "type": "relay",
   "reason": "reboot",
   "info": {
+    "firmware": 10,
     "on": true,
     "toggleAt": 0
   }
@@ -714,6 +717,7 @@ min_capacity  | The load capacity dropped to the min value
 
 Attribute   | Type    | Description
 ----------- | ------- | -----------
+firmware    | number  | The firmware build number of the controller
 on          | boolean | The state of the load: `true` mean the load is powered
 toggleAt    | number  | UNIX epoch timestamp (seconds) for when to toggle the relay state (0 means never)
 
@@ -730,6 +734,7 @@ toggleAt    | number  | UNIX epoch timestamp (seconds) for when to toggle the re
   "type": "trigger",
   "reason": "ffr",
   "info": {
+    "firmware": 10,
     "frequency": 59.695
   }
 }
@@ -748,6 +753,7 @@ ffr    | FFR was the trigger event
 
 Attribute   | Type    | Description
 ----------- | ------- | -----------
+firmware    | number  | The firmware build number of the controller
 frequency   | number  | Frequency that triggered the FFR (Hz)
 
 ## List Statuses

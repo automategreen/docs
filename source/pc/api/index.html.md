@@ -443,7 +443,9 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
         }'
 ```
 
-Limit the amount of power the Power Controller can use for a set period of time.  Power is in Watt*hours.  Time is in seconds.
+Turn on the load and limit the amount of power the Power Controller can use for a set period of time.  Power is in Watt*hours.  Time is in seconds.
+
+The load will be turned on when the command is send.  The load will be turned off if the limit is reached.  The load will turn back on after the period expires.  If the limit is not reached during the set period, then the load will not be turned off.
 
 # Configuring
 

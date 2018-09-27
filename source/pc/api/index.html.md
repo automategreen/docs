@@ -164,26 +164,9 @@ curl https://api.automategreen.com/v1/devices \
         "address": "1234567890qwertyuiopasdf",
         "sn": "PC-ZXCVBNMASDF-001",
         "country": "US",
-        "type": {
-          "id": "power-controller-v10",
-          "profile": "power-controller",
-          "desc": "Power Controller"
-        },
-        "status": {
-          "state": "Active",
-          "info": {
-            "duration": 900,
-            "current": 10,
-            "voltage": 238.35,
-            "power": 590.59,
-            "temperature": 92.7,
-            "frequency": 60.01,
-            "flow": null,
-            "on": true,
-            "toggleAt": 0
-          },
-          "date": "2018-05-08T15:03:15.000Z"
-        }
+        "type": { ... },
+        "status": { ... },
+        "info": { ... }
       }
     }
   ]
@@ -208,35 +191,65 @@ List the Power Controllers for your account.  This request will include all devi
 
 ```json
 {
-  "device": {
-    "id": "6ItNKFLm_mS",
-    "address": "1234567890qwertyuiopasdf",
-    "sn": "PC-ZXCVBNMASDF-001",
-    "country": "US",
-    "type": {
-      "id": "power-controller-v10",
-      "profile": "power-controller",
-      "desc": "Power Controller"
-    },
-    "status": {
-      "state": "Active",
-      "info": {
-        "duration": 900,
-        "current": 10,
-        "voltage": 238.35,
-        "power": 590.59,
-        "temperature": 92.7,
-        "frequency": 60.01,
-        "flow": null,
-        "on": true,
-        "toggleAt": 0
-      },
-      "date": "2018-05-08T15:03:15.000Z"
+    "device": {
+        "id": "6ItNKFLm_mS",
+        "address": "1234567890qwertyuiopasdf",
+        "sn": "PC-ZXCVBNMASDF-001",
+        "country": "US",
+        "type": {
+            "id": "power-controller-v10",
+            "profile": "power-controller",
+            "desc": "Power Controller"
+        },
+        "status": {
+            "state": "Active",
+            "info": {
+                "duration": 900,
+                "current": 0,
+                "voltage": 122.2,
+                "power": 0,
+                "temperature": 99,
+                "frequency": 60.01,
+                "flow": null,
+                "on": false,
+                "toggleIn": 0,
+                "toggleAt": 0,
+                "firmware": 80
+            },
+            "date": "2018-09-26T13:03:27.000Z"
+        },
+        "info": {
+            "ffr": {
+                "enabled": false,
+                "tripThreshold": 59.7,
+                "returnThreshold": 60,
+                "periods": 10,
+                "maxBackOff": 10
+            },
+            "capacity": {
+                "enabled": false,
+                "lossPerLiter": 0,
+                "lossPerIdleMinute": 0,
+                "gainPerWattHour": 0,
+                "maxCapacity": 0,
+                "minCapacity": 0
+            },
+            "flowmeter": {
+                "type": "none",
+                "pipeOuterDiameter": 22.2,
+                "pipeWallThickness": 1.1,
+                "pipeType": "copper"
+            },
+            "powerLimit": {
+                "endsAt": 0,
+                "power": 0.25
+            }
+        }
     }
-  }
 }
 ```
-Get the details for a single Power Controller.  The status is the last known status for the Power Controller.
+
+Get the details for a single Power Controller.  The status is the last known status for the Power Controller.  The info is the current known configuration on the controller.
 
 #### HTTP Request
 `GET /v1/devices/$DEVICE_ID`
@@ -254,6 +267,68 @@ Get the details for a single Power Controller.  The status is the last known sta
 curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/status \
      -H "Authorization: Bearer $TOKEN" \
      -H "Content-Type: application/json"
+```
+
+> Response:
+
+```json
+{
+    "device": {
+        "id": "6ItNKFLm_mS",
+        "address": "1234567890qwertyuiopasdf",
+        "sn": "PC-ZXCVBNMASDF-001",
+        "country": "US",
+        "type": {
+            "id": "power-controller-v10",
+            "profile": "power-controller",
+            "desc": "Power Controller"
+        },
+        "status": {
+            "state": "Active",
+            "info": {
+                "duration": 900,
+                "current": 0,
+                "voltage": 122.2,
+                "power": 0,
+                "temperature": 99,
+                "frequency": 60.01,
+                "flow": null,
+                "on": false,
+                "toggleIn": 0,
+                "toggleAt": 0,
+                "firmware": 80
+            },
+            "date": "2018-09-26T13:03:27.000Z"
+        },
+        "info": {
+            "ffr": {
+                "enabled": false,
+                "tripThreshold": 59.7,
+                "returnThreshold": 60,
+                "periods": 10,
+                "maxBackOff": 10
+            },
+            "capacity": {
+                "enabled": false,
+                "lossPerLiter": 0,
+                "lossPerIdleMinute": 0,
+                "gainPerWattHour": 0,
+                "maxCapacity": 0,
+                "minCapacity": 0
+            },
+            "flowmeter": {
+                "type": "none",
+                "pipeOuterDiameter": 22.2,
+                "pipeWallThickness": 1.1,
+                "pipeType": "copper"
+            },
+            "powerLimit": {
+                "endsAt": 0,
+                "power": 0.25
+            }
+        }
+    }
+}
 ```
 
 Manually request the Power Controller to send an updated status to the cloud.  The status will be based on the averages since the last status.

@@ -11,3 +11,4 @@ gem 'redcarpet', '~> 3.3.2'
 gem 'html-proofer'
 gem 'rake'
 gem 'middleman-s3_sync'
+gem "middleman-cloudfront"

@@ -3,7 +3,9 @@ rvm:
   - 2.2.2
 install: bundle install
 script: bundle exec rake test
-after_success: bundle exec middleman s3_sync
+after_success:
+  - bundle exec middleman s3_sync
+  - bundle exec middleman invalidate
 env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES: true

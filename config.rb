@@ -42,6 +42,12 @@ activate :s3_sync do |s3_sync|
   s3_sync.error_document             = '404.html'
 end
 
+activate :cloudfront do |cf|
+  cf.access_key_id = ENV['DOCS_S3_ACCESS_KEY_ID']
+  cf.secret_access_key = ENV['DOCS_S3_SECRET_KEY']
+  cf.distribution_id = ENV['DOCS_CF_DIST_ID']
+end
+
 # Github pages require relative links
 activate :relative_assets
 set :relative_links, true

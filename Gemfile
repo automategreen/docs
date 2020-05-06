@@ -10,5 +10,5 @@ gem 'rouge', '~> 1.10.1'
 gem 'redcarpet', '~> 3.3.2'
 gem 'html-proofer'
 gem 'rake'
-gem 's3_website'
+gem 's3_website', git: 'https://github.com/yanokwa/s3_website.git', branch: 'jre-upgrade'
 

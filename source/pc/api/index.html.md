@@ -985,9 +985,10 @@ The function status records when an update sent to a device. If the device is co
 
 ## List Statuses
 
-
 `GET /v1/statuses?device=$DEVICE_ID`
+
 `GET /v1/statuses?device=$DEVICE_ID&date=$DATE`
+
 `GET /v1/statuses?device=$DEVICE_ID&date[start]=$START_DATE&date[end]=$END_DATE`
 
 ```sh

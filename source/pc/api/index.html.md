@@ -267,7 +267,7 @@ Get the details for a single Power Controller. The status is the last known stat
 | async     | boolean | Update the devices asynchronously (default=false) |
 
 <aside class="notice">
-When `async=true` the API response will be a 202 with no body. The device's response will be stored in `function` status. The request to status the device will persist even if the devices is unreachable. The device's status will be updated it is connected.
+When <code>async=true</code> the API response will be a 202 with no body. The device's response will be stored in `function` status. The request to status the device will persist even if the devices is unreachable. The device's status will be updated it is connected.
 </aside>
 
 ## Refresh the Device Status
@@ -361,7 +361,7 @@ This API request is not needed for normal operation.  The device will automatica
 | async     | boolean | Update the devices asynchronously (default=false) |
 
 <aside class="notice">
-When `async=true` the API response will be a 202 with no body. The device's response will be stored in `function` status. The command will persist even if the devices is unreachable. The command will be sent once the device is connected.  Only the latest command will be sent.  The persistent behavior can be disabled by setting `persist` to `false` in the command object.
+When <code>async=true</code> the API response will be a 202 with no body. The device's response will be stored in `function` status. The command will persist even if the devices is unreachable. The command will be sent once the device is connected.  Only the latest command will be sent.  The persistent behavior can be disabled by setting `persist` to `false` in the command object.
 </aside>
 
 ## Turn load on
@@ -590,7 +590,7 @@ curl -X POST https://api.automategreen.com/v1/devices/$DEVICE_ID/command \
 | async     | boolean | Update the devices asynchronously (default=false) |
 
 <aside class="notice">
-When `async=true` the API response will be a 202 with no body. The device's response code will be stored in `function` status. The setting will persist even if the devices is unreachable and be applied once the devices is connected.
+When <code>async=true</code> the API response will be a 202 with no body. The device's response code will be stored in `function` status. The setting will persist even if the devices is unreachable and be applied once the devices is connected.
 </aside>
 
 ## Configure FFR
@@ -985,11 +985,10 @@ The function status records when an update sent to a device. If the device is co
 
 ## List Statuses
 
-```
-GET /v1/statuses?device=$DEVICE_ID
-GET /v1/statuses?device=$DEVICE_ID&date=$DATE
-GET /v1/statuses?device=$DEVICE_ID&date[start]=$START_DATE&date[end]=$END_DATE
-```
+
+`GET /v1/statuses?device=$DEVICE_ID`
+`GET /v1/statuses?device=$DEVICE_ID&date=$DATE`
+`GET /v1/statuses?device=$DEVICE_ID&date[start]=$START_DATE&date[end]=$END_DATE`
 
 ```sh
 curl -g https://api.automategreen.com/v1/statuses?device=bksxGL4wMx&date[start]=2015-08-10T09:30&date[end]=2015-08-15 \
@@ -1014,13 +1013,14 @@ The date range for a single request is limited to 10 days.
 | date[start] | Yesterday   | Return statuses starting from this date                    |
 | date[end]   | Now         | Return statuses before this date                           |
 | date        | Yesterday   | Simplified date returning all status from this date to now |
+| raw         | false       | If true, return raw DB object                              |
 
 <aside class="notice">
 Dates must be in ISO 8601 formatted strings.
 </aside>
 
 <aside class="notice">
-If device is omitted all devices schedules for the time period are return.  Recommend for only short periods of time since results can be to large.
+If device is omitted statuses for all devices for the time period are return.  This is recommend for only short periods of time since results can be to large.
 </aside>
 
 # Response Codes
